@@ -139,3 +139,4 @@ class AutoSlider {
       }.bind(this));
   }
 }
+
