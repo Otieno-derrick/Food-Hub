@@ -44,7 +44,7 @@ function getMealList(){
             });
             mealList.classList.remove('notFound');
         } else{
-            html = "Sorry, we didn't find any meal!";
+            html = "Oops invalid search!";
             mealList.classList.add('notFound');
         }
 
@@ -82,4 +82,60 @@ function mealRecipeModal(meal){
     `;
     mealDetailsContent.innerHTML = html;
     mealDetailsContent.parentElement.classList.add('showRecipe');
+}
+
+
+
+window.onload = function() {  
+  const slider = new AutoSlider("#main-slider");
+
+};
+
+class AutoSlider {
+  constructor(element) {
+      this.el = document.querySelector(element);
+      this.image();
+  }
+
+  image() {
+      this.slides = this.el.querySelectorAll(".slide");
+      this.index = 0;
+      this.timer = null;
+      this.delay = 6500;
+      this.action();
+      this.addHoverListener();
+  }
+
+  _slideTo(slide) {
+      const currentSlide = this.slides[slide];
+      currentSlide.style.opacity = 1;
+
+      for (let i = 0; i < this.slides.length; i++) {
+          let slide = this.slides[i];
+          if (slide !== currentSlide) {
+              slide.style.opacity = 0;
+          }
+      }
+  }
+
+  action() {
+      this.timer = setInterval(function () {
+          this.index++;
+          if (this.index == this.slides.length) {
+              this.index = 0;
+          }
+          this._slideTo(this.index);
+      }.bind(this), this.delay);
+  }
+
+  addHoverListener() {
+      this.el.addEventListener("mouseover", function () {
+          clearInterval(this.timer);
+          this.timer = null;
+      }.bind(this));
+    
+      this.el.addEventListener("mouseout", function () {
+          this.action();
+      }.bind(this));
+  }
 }
